@@ -111,22 +111,19 @@ class JY270M(Instrument):
         'H0\r',
         'F0,%d\r',
         "Control the relative step displacement of the grating motor.",
-        get_process=get_steps_returns,
-    )
+        get_process=get_steps_returns)
 
     entrysteps = Instrument.control(
         'j0,0\r',
         'k0,0,%d\r',
         "Control the relative step displacement of the entry slit.",
-        get_process=get_steps_returns,
-    )
+        get_process=get_steps_returns)
 
     exitsteps = Instrument.control(
         'j0,2\r',
         'k0,2,%d\r',
         "Control the relative step displacement of the exit slit.",
-        get_process=get_steps_returns,
-    )
+        get_process=get_steps_returns)
 
     def read(self, **kwargs):
         """
@@ -144,14 +141,12 @@ class JY270M(Instrument):
                 break
         return read.decode()
 
-    def write_read(self, command: bytes, nread: int = 100, **kwargs):
+    def write_read(self, command: bytes, nread: int = 100, timeout=None, **kwargs):
         """
         This function writes a command to the spectrometer and reads the
         answer of the spectrometer one byte at a time.
         """
-        self.write_bytes(command)
-        read = b''
-        timeout = kwargs.get('timeout', self.default_timeout)
+        timeout = self.default_timeout if timeout is None else timeout
         self.adapter.connection.timeout = timeout
         for ind in range(nread):
             try:
@@ -174,8 +169,7 @@ class JY270M(Instrument):
 
     def unstuck(self):
         """
-        If the spectrometer gets stuck, these function tries to unstick
-        the instrument using two commands.
+        Unstuck the instrument, if it got stuck.
         """
         self.write_read(b'\xF8')
         self.write_read(b'\xDE')
