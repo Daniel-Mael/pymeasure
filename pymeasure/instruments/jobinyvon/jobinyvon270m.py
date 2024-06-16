@@ -269,7 +269,8 @@ class JY270M(Instrument):
         if code != 'o':
             raise IOError(f'Wrong return code from driver, received {code}')
 
-    def get_entry_slit_microns(self):
+    @property
+    def entry_slit_microns(self):
         """
         Reading of the ABSOLUTE position of the entrance slit in micrometres.
         """
