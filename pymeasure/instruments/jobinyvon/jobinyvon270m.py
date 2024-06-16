@@ -246,13 +246,15 @@ class JY270M(Instrument):
         if code != 'o':
             raise IOError(f'Wrong return code from driver, received {code}')
 
-    def get_grating_wavelength(self):
+    @property
+    def grating_wavelength(self):
         """
         Reading the wavelength from the grating motor of the spectrometer.
         """
-        return self._lambda_max - ((self._max_steps - self.gsteps) / self._steps_nm)
+        return self._lambda_max - ((self._max_steps - self.grating_steps) / self._steps_nm)
 
-    def move_grating_wavelength(self, wavelength: float):
+    @grating_wavelengt.setter
+    def grating_wavelength(self, wavelength: float):
         """
         ABSOLUTE positioning of the grating motor in wavelength.
         """
