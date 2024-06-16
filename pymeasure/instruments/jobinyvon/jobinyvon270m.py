@@ -63,7 +63,7 @@ class JY270M(Instrument):
 
     """Maximum value for the wavelength in nm, maximum number of steps 
     for the grating motor and for the entry and exit slits."""
-    _lambda_max = 1171.68
+    lambda_0 = 1171.68
     _max_steps = 37494
     _max_steps_slit = 1102.36 # do not know what this is for?
 
@@ -73,13 +73,6 @@ class JY270M(Instrument):
         Usual timeout needed for normal use.
         """
         return 300
-
-    @property
-    def lambda_0(self):
-        """
-        Get the wavelength when the motor just finished the initialization.
-        """
-        return self._lambda_max
 
     @property
     def steps_in_one_nanometer(self):
