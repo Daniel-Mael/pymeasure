@@ -176,13 +176,17 @@ class JY270M(Instrument):
 
     def auto_baud(self):
         """
+        Set the instrument to intelligent mode to start communication.
+        
         This function tries to set the spectrometer into
         intelligent mode (mode that allows communication with the
         instrument). The logic of this function is based on the
-        spectrometer's datasheet. If the function successfully sets
-        the instrument into intelligent mode, we return True,
-        False otherwise.
+        spectrometer's datasheet.
+        
+        :return: boolean whether setting the instrument into
+            intelligent mode was successful.
         """
+        
         while True:
             ans = self.write_read(b' ')
             if len(ans) != 0:
